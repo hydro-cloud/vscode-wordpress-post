@@ -20,5 +20,8 @@
         "out",
         "dist",
         "**/*.d.ts"
-    ]
+    ],
+    "env": {
+        "node": true
+    }
 }
