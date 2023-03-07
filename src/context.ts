@@ -121,11 +121,54 @@ export class Context {
       const now = new Date();
       this.outputChannel.appendLine(
         now.toLocaleTimeString("en", { hour12: false }) +
-          "." +
-          String(now.getMilliseconds()).padStart(3, "0") +
-          " " +
-          text
+        "." +
+        String(now.getMilliseconds()).padStart(3, "0") +
+        " " +
+        text
       );
     }
+  }
+
+
+
+  imageAddTitleAttribute(): boolean {
+    return this.getConf("image.addTitleAttribute");
+  }
+
+  imageAddSizeAttributes(): boolean {
+    return this.getConf("image.addSizeAttributes");
+  }
+
+  imageResize(): boolean {
+    return this.getConf("image.resize");
+  }
+
+  getImageResizeJpegQuality(): number {
+    return this.getConf("image.resizeJpegQuality");
+  }
+
+  useMozjpeg(): boolean {
+    return this.getConf("image.resizeJpegUseMozjpeg");
+  }
+
+  usePngPalette(): boolean {
+    return this.getConf("image.resizePngUsePalette");
+  }
+
+  getImageMaxSize(): [number, number] {
+    return [this.getConf("image.maxWidth"), this.getConf("image.maxHeight")];
+  }
+
+  getAttachedImageThumbnailSlug(imageSlug: string, width: number, height: number): string {
+    const sep: string = this.getConf("slugSepalator");
+    const size: string = width.toString() + "x" + height.toString();
+    return imageSlug + sep + size;
+  }
+
+
+  /* ----------*/
+
+  getPostTest01(): string {
+    return this.getConf("post.test01")
   }
 }

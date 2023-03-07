@@ -24,16 +24,40 @@
     "post"
   ],
   "activationEvents": [
-    "onCommand:wordpress-post.post"
+    "onCommand:wordpress-post.post",
+    "onCommand:wordpress-post.check"
   ],
   "main": "./out/extension.js",
   "contributes": {
+    "menus": {
+      "editor/context": [{
+          "command": "wordpress-post.markdown-clip-to-liner",
+          "group": "modification"
+      },{
+        "command": "wordpress-post.html-clip-to-liner",
+        "group": "modification"
+    }]
+  },
     "commands": [
       {
         "command": "wordpress-post.post",
         "enablement": "editorLangId == markdown",
         "title": "Post",
         "category": "WordPress Post"
+      },
+      {
+        "command": "wordpress-post.check",
+        "enablement": "editorLangId == markdown",
+        "title": "Check",
+        "category": "WordPress Check"
+      },
+      {
+        "command": "wordpress-post.markdown-clip-to-liner",
+        "title": "markdown: Clip To Liner"
+      },
+      {
+        "command": "wordpress-post.html-clip-to-liner",
+        "title": "html: Clip To Liner"
       }
     ],
     "configuration": {
@@ -101,13 +125,70 @@
         },
         "wordpress-post.mediaTypes": {
           "type": "string",
-          "default": ".jpg,image/jpg;.jpeg,image/jpg;.png,image/png",
+          "default": ".jpg,image/jpg;.jpeg,image/jpg;.png,image/png;.gif,image/gif",
           "description": "File extensions and media types to enable."
         },
         "wordpress-post.useLinkableImage": {
           "type": "boolean",
           "default": false,
           "description": "Add a tag to img tag"
+        },
+        "wordpress-post.image.addTitleAttribute": {
+          "type": "boolean",
+          "default": false,
+          "description": "Add title attribute to img tag using alt attribute value if title is not specified in Markdown."
+        },
+        "wordpress-post.image.addSizeAttributes": {
+          "type": "boolean",
+          "default": false,
+          "description": "Add hight and width attributes to img tag."
+        },
+        "wordpress-post.image.resize": {
+          "type": "boolean",
+          "default": false,
+          "description": "Resize image size down to max width or max height if exceeds. To use this feature you need to specify either max width or max height at least. In addition, size attributes are automatically added to img tag if this option is true."
+        },
+        "wordpress-post.image.resizeJpegQuality": {
+          "type": "number",
+          "default": 80,
+          "description": "JPEG quality when resizing. (default: 80)"
+        },
+        "wordpress-post.image.resizeJpegUseMozjpeg": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use mozjpeg to reduce JPEG file size when resizing."
+        },
+        "wordpress-post.image.resizePngUsePalette": {
+          "type": "boolean",
+          "default": false,
+          "description": "Use palette (index color) to reduce PNG file size when resizing."
+        },
+        "wordpress-post.image.maxWidth": {
+          "type": "number",
+          "default": 0,
+          "description": "Max image width. Use 0 to specify no limit."
+        },
+        "wordpress-post.image.maxHeight": {
+          "type": "number",
+          "default": 0,
+          "description": "Max image height. use 0 to specify no limit."
+        },
+
+        "wordpress-post.post.test01": {
+          "type": "string",
+          "default": "<p hoge=\"test\">test</p>",
+          "description": "this is hogehoge."
+        },
+        "wordpress-post.post.test02": {
+          "type": ["string","object"],
+          "default": "<p hoge=\"test\">test</p>",
+          "markdownDescription": "this is hogehoge."
+        },
+        "wordpress-post.post.test03": {
+          "type": "string[]",
+          "description": "Enter a multi-line string.",
+          "default": "",
+          "markdownDescription": "<p>test</p>\n\n|a|b|\n|:-|-:|\n|112312|2132131|\n\n```java\npublic class Hoge{\n}\n```"
         },
         "wordpress-post.debug": {
           "type": "boolean",
@@ -143,6 +224,15 @@
     "axios": "^0.24.0",
     "cheerio": "^1.0.0-rc.10",
     "gray-matter": "^4.0.3",
-    "markdown-it": "^12.3.0"
+    "markdown-it": "^12.3.0",
+    "markdown-it-container": "^3.0.0",
+    "markdown-it-emoji": "^2.0.2",
+    "markdown-it-expandable": "^1.0.2",
+    "markdown-it-footnote": "^3.0.3",
+    "markdown-it-mark": "^3.0.1",
+    "markdown-it-prism": "^2.3.0",
+    "markvis": "^0.0.12",
+    "probe-image-size": "^7.2.3",
+    "sharp": "^0.30.7"
   }
 }
